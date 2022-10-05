@@ -45,6 +45,7 @@ class ProfileAuthView(APIView):
         return JsonResponse(response, status=status_codes.HTTP_200_OK)
     
     def put(self, request, *args, **kwargs):
+        
         user = request.user
         first_name = request.data.get('first_name')
         last_name = request.data.get('last_name')
@@ -72,6 +73,8 @@ class ProfileIdView(APIView):
         return JsonResponse(response, status=status_codes.HTTP_200_OK)
     
     def put(self, request, *args, **kwargs):
+        import ipdb;
+        ipdb.set_trace()
         user = request.user
         first_name = request.data.get('first_name')
         last_name = request.data.get('last_name')

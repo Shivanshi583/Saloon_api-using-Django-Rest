@@ -18,14 +18,12 @@ class ProductView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        import ipdb;
-        ipdb.set_trace()
-        user = self.request.user,
-        name = request.data.get('name'),
-        description = request.data.get('description'),
-        price = request.data.get('price'),
-        brand = request.data.get('brand'),
-        rating = request.data.get('rating'),
+        user = self.request.user
+        name = request.data.get('name')
+        description = request.data.get('description')
+        price = request.data.get('price')
+        brand = request.data.get('brand')
+        rating = request.data.get('rating')
 
         product_handler = ProductHandler()
         response = product_handler.create_product(  
@@ -35,9 +33,21 @@ class ProductView(APIView):
         return JsonResponse(response, status=status_codes.HTTP_200_OK)
 
     def get(self, request, *args, **kwargs):
-        user = request.user,
+        user = request.user
         product_handler = ProductHandler()
         response = product_handler.get_all_products(  
             user)
+
+        return JsonResponse(response, status=status_codes.HTTP_200_OK)
+
+
+class ProductIdView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('product_id')
+        product_handler = ProductHandler()
+        response = product_handler.get_product_by_id(  
+            product_id)
 
         return JsonResponse(response, status=status_codes.HTTP_200_OK)

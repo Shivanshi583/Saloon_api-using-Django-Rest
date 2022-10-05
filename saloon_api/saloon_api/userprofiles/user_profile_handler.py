@@ -51,6 +51,10 @@ class UserProfileHandler():
     def update_profile(
         self, user, first_name, last_name, profile_type, dob, gender):
 
+
+        import ipdb;
+        ipdb.set_trace()
+        
         profile = Profiles.objects.get(user= user)
 
         if first_name:

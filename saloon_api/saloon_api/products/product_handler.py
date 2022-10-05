@@ -30,10 +30,8 @@ class ProductHandler():
 
     def create_product(
         self, user, name, description, price, brand, rating): 
-        import ipdb;
-        ipdb.set_trace()
 
-        vendor = Profiles.objects.get(user=user)
+        vendor = Profiles.objects.get(user= user)
         
         product = Product.objects.create(
             vendor = vendor,
@@ -56,14 +54,23 @@ class ProductHandler():
         profile = Profiles.objects.get(
             user=user)
 
-        if profile.type == 'VENDOR':
-            products = Product.objects.filter(vendor = profile) #(vendor__user = user)
+        if profile.profile_type == 'VENDOR':
+            products = Product.objects.filter(vendor = profile) #(vendor__user = user) vendor__user__username=user.username
         else:
             products = Product.objects.all()
 
         return {
             'success': True,
             'products': [self.generate_product_response(product) for product in products]
+        }
+
+    def get_product_by_id(self, product_id): 
+
+        product = Product.objects.filter(pk=product_id).first()
+
+        return {
+            'success': True,
+            'product': self.generate_product_response(product)
         }
 
 
