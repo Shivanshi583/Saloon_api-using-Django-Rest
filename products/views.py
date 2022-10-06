@@ -51,29 +51,3 @@ class ProductIdView(APIView):
             product_id)
 
         return JsonResponse(response, status=status_codes.HTTP_200_OK)
-
-    def put(self, request, *args, **kwargs):
-        product_id = kwargs.get('product_id')
-        user=request.user
-        name = request.data.get('name')
-        description = request.data.get('description')
-        price = request.data.get('price')
-        brand = request.data.get('brand')
-        product_handler = ProductHandler()
-        response = product_handler.update_product(
-       product_id,user,name,description,price,brand)
-
-        return JsonResponse(response, status=status_codes.HTTP_200_OK)
-
-    def delete(self, request, *args, **kwargs):
-        product_id = kwargs.get('product_id')
-        user=request.user
-        product_handler = ProductHandler()
-        response = product_handler.delete_product(
-        product_id,user)
-
-        return JsonResponse(response, status=status_codes.HTTP_200_OK)
-
-    
-
-
