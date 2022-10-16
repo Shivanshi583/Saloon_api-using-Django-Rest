@@ -33,10 +33,16 @@ class ProductView(APIView):
         return JsonResponse(response, status=status_codes.HTTP_200_OK)
 
     def get(self, request, *args, **kwargs):
+
         user = request.user
+        max_price = request.GET.get('max_price')
+        min_price = request.GET.get('min_price')
+        min_rating = request.GET.get('min_rating')
+        max_rating = request.GET.get('max_rating')
+        search_term = request.GET.get('search_term')
         product_handler = ProductHandler()
         response = product_handler.get_all_products(  
-            user)
+            user, max_price, min_price, max_rating, min_rating, search_term)
 
         return JsonResponse(response, status=status_codes.HTTP_200_OK)
 

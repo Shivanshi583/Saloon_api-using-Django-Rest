@@ -1,4 +1,4 @@
-from math import prod
+from django.db.models import Q
 from os import access
 import profile
 import uuid
@@ -49,7 +49,7 @@ class ProductHandler():
 
 
 
-    def get_all_products(self, user): 
+    def get_all_products(self, user, max_price, min_price, max_rating, min_rating, search_term): 
 
         profile = Profiles.objects.get(
             user=user)
@@ -58,6 +58,18 @@ class ProductHandler():
             products = Product.objects.filter(vendor = profile) #(vendor__user = user) vendor__user__username=user.username
         else:
             products = Product.objects.all()
+
+        if max_price:
+            products = products.filter(price__lte = max_price) 
+        if min_price: 
+            products = products.filter(price__gte = min_price) 
+        if max_rating: 
+            products = products.filter(rating__lte = max_rating) 
+        if min_rating: 
+            products = products.filter(rating__gte = min_rating) 
+        if search_term: 
+            products = products.filter(Q(name__icontains = search_term)
+                                    |Q(description__icontains = search_term))
 
         return {
             'success': True,
